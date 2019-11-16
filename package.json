@@ -1,0 +1,22 @@
+{
+  "name": "prepare-signing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngeri/prepare-signing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ngeri/prepare-signing/issues"
+  },
+  "homepage": "https://github.com/ngeri/prepare-signing#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.0",
+    "shelljs": "^0.8.3"
+  }
+}

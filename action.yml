@@ -1,0 +1,23 @@
+name: 'Prepare signing'
+description: 'Prepare signing of the iOS application'
+inputs:
+  b64_prov:
+    description: 'Base64 encoded provisioning profile'
+    required: true
+  b64_cert:
+    description: 'Base64 encoded .p12 signing cert with private key'
+    required: true
+  p12_pw:
+    description: 'Password of the .p12 file'
+    required: true
+  kc_id:
+    description: 'Id of the newly created temporary kechain'
+    required: true
+    default: 'signing.ios'
+  kc_pw:
+    description: 'Password of the newly created temporary kechain'
+    required: true
+    default: 'signing.ios'
+runs:
+  using: 'node12'
+  main: 'index.js'
