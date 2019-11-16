@@ -1,10 +1,12 @@
-# Prepare signing for iOS app action
+# Prepare signing for iOS build action
 
-This action helps to provide certificates and provisioning profiles necessary for `xcodebuild`'s `archive` and `exportArchive` commands.
+This action helps to provide necessary certificates and provisioning profiles for `xcodebuild`'s `archive` and `exportArchive` commands.
 
 It can import the provided singing certificate into an unlocked keychain. It copies the provided provisioning profile into the folder `~/Library/MobileDevice/Provisioning Profiles`.
 
-**Please only use this action with secrets!**
+**Please use this action with secrets only!**
+
+[How to add a secrets?](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
 
 ## Inputs
 
@@ -30,11 +32,12 @@ It can import the provided singing certificate into an unlocked keychain. It cop
 
 ## Example usage
 ```yaml
-uses: ngeri/prepare-signing@v1
-with:
- b64_prov: ${{ secrets.B64_PROV_DIST }}
- b64_cert: ${{ secrets.B64_CERT_DIST }}
- p12_pw: ${{ secrets.P12PW_DIST }}
- kc_id: ${{ secrets.KCID }}
- kc_pw: ${{ secrets.KCPW }}
+- name: Prepare signing
+  uses: ngeri/prepare-signing@v1.0.0
+  with:
+    b64_prov: ${{ secrets.B64_PROV }}
+    b64_cert: ${{ secrets.B64_CERT }}
+    p12_pw: ${{ secrets.P12_PW }}
+    kc_id: ${{ secrets.KC_ID }}
+    kc_pw: ${{ secrets.KC_PW }}
 ```
