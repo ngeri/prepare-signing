@@ -2,13 +2,13 @@ name: 'Prepare signing'
 description: 'Prepare signing of the iOS application'
 inputs:
   appStoreConnectPrivateKey:
-    description: ''
+    description: 'App Store Connect private key with proper rights'
     required: true
   keyID:
-    description: ''
+    description: 'Identifier of the private key'
     required: true
   issuerID:
-    description: ''
+    description: 'Issuer identifier'
     required: true
   keychainName:
     description: 'Id of the newly created temporary kechain'
@@ -28,7 +28,7 @@ inputs:
     description: 'Bundle identifier of the application'
     required: true
   signType:
-    description: ''
+    description: 'E.g.: IOS_APP_DEVELOPMENT, IOS_APP_STORE etc.'
     required: true
 runs:
   using: 'node12'
