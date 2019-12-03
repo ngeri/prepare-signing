@@ -58,7 +58,7 @@ async function run() {
     const issuerID = core.getInput(`issuerID`);
     const keychainName = core.getInput(`keychainName`);
     const keychainPassword = core.getInput(`keychainPassword`);
-    const base64P12File = core.getInput(`p12Password`);
+    const base64P12File = core.getInput(`base64P12File`);
     const p12Password = core.getInput(`p12Password`);
     const bundleIdentifier = core.getInput(`bundleIdentifier`);
     const signType = core.getInput(`signType`);
