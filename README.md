@@ -50,7 +50,7 @@ It can import the provided singing certificate into an unlocked keychain. It fet
 ## Example usage
 ```yaml
 - name: Prepare signing
-  uses: ngeri/prepare-signing@v1.0.1
+  uses: ngeri/prepare-signing@v1.0.2
   with:
     appStoreConnectPrivateKey: ${{ secrets.appStoreConnectPrivateKey }}
     keyID: ${{ env.keyID }}
