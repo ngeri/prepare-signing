@@ -8,6 +8,11 @@ It can import the provided singing certificate into an unlocked keychain. It fet
 
 [How to add a secrets?](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
 
+Base64 encoded string of a p12 file can be created with the below command
+```bash
+base64 path/to/p12/file
+```
+
 ## Inputs
 
 ### `appStoreConnectPrivateKey`
