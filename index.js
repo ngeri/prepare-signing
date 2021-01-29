@@ -40,13 +40,14 @@ function setupProvisioning(profileContent, profileUUID) {
 
 function setupKeychain(keychainName, keychainPassword, base64P12File, p12Password) {
   const tempCertificateName = `tmp.p12`;
-  shell.exec(`(echo ${base64P12File} | base64 --decode) > ${tempCertificateName}`);
-  shell.exec(`security create-keychain -p ${keychainPassword} ${keychainName}`);
-  shell.exec(`security list-keychains -d user -s login.keychain ${keychainName}`);
-  shell.exec(`security import ${tempCertificateName} -k ${keychainName} -P ${p12Password} -T /usr/bin/codesign -T /usr/bin/security`);
-  shell.exec(`security set-keychain-settings -lut 1000 ${keychainName}`);
-  shell.exec(`security unlock-keychain -p ${keychainPassword} ${keychainName}`);
-  shell.exec(`security set-key-partition-list -S apple-tool:,apple: -s -k ${keychainPassword} ${keychainName}`);
+  shell.exec(`(echo "${base64P12File}" | base64 --decode) > "${tempCertificateName}"`);
+  shell.exec(`security create-keychain -p "${keychainPassword}" "${keychainName}"`);
+  shell.exec(`security list-keychains -d user -s login.keychain "${keychainName}"`);
+  shell.exec(`security import "${tempCertificateName}" -A -k "${keychainName}" -P "${p12Password}"`);
+  shell.exec(`security set-keychain-settings -lut 1000 "${keychainName}"`);
+  shell.exec(`security default-keychain -s "${keychainName}"`);
+  shell.exec(`security unlock-keychain -p "${keychainPassword}" "${keychainName}"`);
+  shell.exec(`security set-key-partition-list -S apple-tool:,apple: -s -k "${keychainPassword}" "${keychainName}"`);
   shell.exec(`rm ${tempCertificateName}`);
 }
 
