@@ -53,7 +53,8 @@ function setupKeychain(keychainName, keychainPassword, base64P12File, p12Passwor
 
 async function run() {
   try {
-
+    console.log('Hello, world!');
+    
     const appStoreConnectPrivateKey = core.getInput(`appStoreConnectPrivateKey`);
     const keyID = core.getInput(`keyID`);  
     const issuerID = core.getInput(`issuerID`);
