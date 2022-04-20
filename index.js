@@ -89,12 +89,12 @@ async function run() {
         throw `Could not find provisioning profiles for ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/resources/profiles/list`;
       }
     } else {
-      console.log('throwing error no bundle id')
+      console.log(`Could not find bundleIdentifier ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/resources/identifiers/list`)
       throw `Could not find bundleIdentifier ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/resources/identifiers/list`;
     }
   
   } catch (error) {
-    console.log('Caught error: ' + error.message);
+    console.log('Caught error: ' + error);
     core.setFailed(error.message);
   }
 } 
