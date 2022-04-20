@@ -83,18 +83,16 @@ async function run() {
           
           setupKeychain(keychainName, keychainPassword, base64P12File, p12Password);
         } else {
-          throw `Could not find matching provisioning profile for ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/`;  
+          throw new Error(`Could not find matching provisioning profile for ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/`);
         }
       } else {
-        throw `Could not find provisioning profiles for ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/resources/profiles/list`;
+        throw new Error(`Could not find provisioning profiles for ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/resources/profiles/list`);
       }
     } else {
-      console.log(`Could not find bundleIdentifier ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/resources/identifiers/list`)
-      throw `Could not find bundleIdentifier ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/resources/identifiers/list`;
+      throw new Error(`Could not find bundleIdentifier ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/resources/identifiers/list`);
     }
   
   } catch (error) {
-    console.log('Caught error: ' + error);
     core.setFailed(error.message);
   }
 } 
