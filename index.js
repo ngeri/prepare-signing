@@ -72,6 +72,9 @@ async function run() {
 
       if (rawProfileIds) {
         const profilesResponse = await get("https://api.appstoreconnect.apple.com/v1/profiles", { "filter[id]": `${rawProfileIds}`, "filter[profileType]": signType }, token); // ProfilesResponse Type
+        console.dir(profilesResponse, {
+          depth: null
+        })
         const profile = profilesResponse.data[0];
 
         if (profile) {
