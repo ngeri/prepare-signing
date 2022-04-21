@@ -44,8 +44,6 @@ function setupProvisioning(profileContentBase64, provisioningProfilePath) {
   shell.exec(`mkdir -p "${provisioningProfileDir}"`);
   let buf = new Buffer(profileContentBase64, 'base64');
   let profileContent = buf.toString('ascii');
-  
-  console.log(profileContentBase64)
   shell.exec(`(echo "${profileContent}") > "${provisioningProfilePath}"`);
 }
 
