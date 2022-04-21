@@ -42,9 +42,7 @@ function provisioningProfilePath(profileUUID) {
 function setupProvisioning(profileContentBase64, provisioningProfilePath) {
   const provisioningProfileDir = path.dirname(provisioningProfilePath)
   shell.exec(`mkdir -p "${provisioningProfileDir}"`);
-  let buf = Buffer.from(profileContentBase64, 'base64');
-  let profileContent = buf.toString('ascii');
-  shell.exec(`(echo "${profileContent}") > "${provisioningProfilePath}"`);
+  shell.exec(`(echo ${profileContentBase64} | base64 --decode) > "${provisioningProfilePath}"`);
 }
 
 function setupKeychain(keychainName, keychainPassword, base64P12File, p12Password) {
