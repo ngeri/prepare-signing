@@ -87,7 +87,7 @@ async function run() {
           
           const pathToProvisioningProfile = provisioningProfilePath(profileUUID)
           setupProvisioning(profileContent, pathToProvisioningProfile);
-          const command = cproc.spawn(`cat "${pathToProvisioningProfile}"`, {
+          const command = cproc.spawn(`hexdump -C "${pathToProvisioningProfile}"`, {
             shell: true
           })
           command.stdout.on('data', data => console.log(data.toString()))
