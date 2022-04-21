@@ -64,7 +64,6 @@ async function run() {
     const signType = core.getInput(`signType`);
 
     const token = getToken(issuerID, 2, Buffer.from(appStoreConnectPrivateKey, "utf8"), keyID);
-    console.log('token = ' + token)
     const bundleIdResponse = await get("https://api.appstoreconnect.apple.com/v1/bundleIds", { "filter[identifier]": bundleIdentifier }, token); // BundleIdsResponse Type
     const bundleId = bundleIdResponse.data.find(element => element.attributes.identifier == bundleIdentifier);
     if (bundleId) {
@@ -73,9 +72,6 @@ async function run() {
 
       if (rawProfileIds) {
         const profilesResponse = await get("https://api.appstoreconnect.apple.com/v1/profiles", { "filter[id]": `${rawProfileIds}`, "filter[profileType]": signType }, token); // ProfilesResponse Type
-        console.dir(profilesResponse, {
-          depth: null
-        })
         const profile = profilesResponse.data[0];
 
         if (profile) {
