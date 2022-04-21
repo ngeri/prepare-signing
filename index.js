@@ -42,7 +42,7 @@ function provisioningProfilePath(profileUUID) {
 function setupProvisioning(profileContentBase64, provisioningProfilePath) {
   const provisioningProfileDir = path.dirname(provisioningProfilePath)
   shell.exec(`mkdir -p "${provisioningProfileDir}"`);
-  let buf = new Buffer(profileContentBase64, 'base64');
+  let buf = Buffer.from(profileContentBase64, 'base64');
   let profileContent = buf.toString('ascii');
   shell.exec(`(echo "${profileContent}") > "${provisioningProfilePath}"`);
 }
