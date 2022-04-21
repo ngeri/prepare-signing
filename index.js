@@ -39,11 +39,14 @@ function provisioningProfilePath(profileUUID) {
   return `~/Library/MobileDevice/Provisioning\\ Profiles/${profileName}`;
 }
 
-function setupProvisioning(profileContent, provisioningProfilePath) {
+function setupProvisioning(profileContentBase64, provisioningProfilePath) {
   const provisioningProfileDir = path.dirname(provisioningProfilePath)
   shell.exec(`mkdir -p "${provisioningProfileDir}"`);
-  // shell.exec(`(echo "${profileContent}" | base64 --decode) > "${provisioningProfilePath}"`);
-  shell.exec(`(echo "Hello world!") > "${provisioningProfilePath}"`);
+  let buf = new Buffer(profileContentBase64, 'base64');
+  let profileContent = buf.toString('ascii');
+  
+  console.log(profileContentBase64)
+  shell.exec(`(echo "${profileContent}") > "${provisioningProfilePath}"`);
 }
 
 function setupKeychain(keychainName, keychainPassword, base64P12File, p12Password) {
