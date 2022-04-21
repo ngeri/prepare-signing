@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const shell = require('shelljs');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
+const cproc = require('child_process');
 
 function getToken(issuerID, minute, privateKey, keyId) {
   const payload = { 
@@ -32,10 +33,14 @@ async function get(url, params, token, method = "GET") {
   return response.data;
 }
 
-function setupProvisioning(profileContent, profileUUID) {
+function provisioningProfilePath(profileUUID) {
   const profileName = `${profileUUID}.mobileprovision`;
-  shell.exec(`mkdir -p ~/Library/MobileDevice/Provisioning\\ Profiles`);
-  shell.exec(`(echo ${profileContent} | base64 --decode) > ~/Library/MobileDevice/Provisioning\\ Profiles/${profileName}`);
+  return `~/Library/MobileDevice/Provisioning\\ Profiles/${profileName}`;
+}
+
+function setupProvisioning(profileContent, provisioningProfilePath) {
+  shell.exec(`mkdir -p "~/Library/MobileDevice/Provisioning Profiles"`);
+  shell.exec(`(echo ${profileContent} | base64 --decode) > "${provisioningProfilePath}"`);
 }
 
 function setupKeychain(keychainName, keychainPassword, base64P12File, p12Password) {
@@ -77,9 +82,13 @@ async function run() {
         if (profile) {
           const profileContent = profile.attributes.profileContent;
           const profileUUID = profile.attributes.uuid;
-
-          setupProvisioning(profileContent, profileUUID);
           
+          const pathToProvisioningProfile = provisioningProfilePath(profileUUID)
+          setupProvisioning(profileContent, pathToProvisioningProfile);
+          const command = cproc.spawn(`cat "${pathToProvisioningProfile}"`, {
+            shell: true
+          })
+          command.stdout.on('data', data => console.log(data.toString()))
           setupKeychain(keychainName, keychainPassword, base64P12File, p12Password);
         } else {
           throw new Error(`Could not find matching provisioning profile for ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/`);
