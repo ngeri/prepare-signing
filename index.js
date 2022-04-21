@@ -3,6 +3,7 @@ const shell = require('shelljs');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const cproc = require('child_process');
+const path = require('path');
 
 function getToken(issuerID, minute, privateKey, keyId) {
   const payload = { 
@@ -39,8 +40,9 @@ function provisioningProfilePath(profileUUID) {
 }
 
 function setupProvisioning(profileContent, provisioningProfilePath) {
-  shell.exec(`mkdir -p "~/Library/MobileDevice/Provisioning Profiles"`);
-  shell.exec(`(echo ${profileContent} | base64 --decode) > "${provisioningProfilePath}"`);
+  const provisioningProfileDir = path.dirname(provisioningProfilePath)
+  shell.exec(`mkdir -p "${provisioningProfileDir}"`);
+  shell.exec(`(echo "hello" | base64 --decode) > "${provisioningProfilePath}"`);
 }
 
 function setupKeychain(keychainName, keychainPassword, base64P12File, p12Password) {
