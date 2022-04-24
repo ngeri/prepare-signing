@@ -45,8 +45,9 @@ function provisioningProfilePath(profileUUID) {
 function setupProvisioning(profileContentBase64, provisioningProfilePath) {
   const provisioningProfileDir = path.dirname(provisioningProfilePath)
   shell.exec(`echo "provisioningProfileDir = ${provisioningProfileDir}"`);
-  shell.exec(`eval homedir="~"`)
-  shell.exec("echo homedir = $homedir")
+  shell.exec(`eval homedir=~`)
+  shell.exec("echo homedir = ${homedir}")
+  shell.exec("echo home = ${HOME}")
   shell.exec(`mkdir -p "${provisioningProfileDir}"`);
   shell.exec(`(echo ${profileContentBase64} | base64 --decode) > "${provisioningProfilePath}"`);
 }
