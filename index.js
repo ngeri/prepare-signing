@@ -38,7 +38,7 @@ async function get(url, params, token, method = "GET") {
 function provisioningProfilePath(profileUUID) {
 //  const profileName = `${profileUUID}.mobileprovision`;
   const profileName = "GoRide_AppStore.mobileprovision";
-  return `~/Library/MobileDevice/Provisioning\\ Profiles/${profileName}`;
+  return `~/Library/MobileDevice/Provisioning Profiles/${profileName}`;
 }
 
 function setupProvisioning(profileContentBase64, provisioningProfilePath) {
