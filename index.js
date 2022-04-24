@@ -53,6 +53,7 @@ function resolveTilde(filePath) {
 
 function provisioningProfilePath(profileUUID) {
   const profileName = `${profileUUID}.mobileprovision`;
+  // Resolve ~ as the node.js shell.exec command does not resolve ~ correctly
   return resolveTilde(`~/Library/MobileDevice/Provisioning Profiles/${profileName}`);
 }
 
