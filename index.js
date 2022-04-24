@@ -2,9 +2,7 @@ const core = require('@actions/core');
 const shell = require('shelljs');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
-const cproc = require('child_process');
 const path = require('path');
-const fs = require('fs')
 const os = require('os');
 
 function getToken(issuerID, minute, privateKey, keyId) {
@@ -37,21 +35,19 @@ async function get(url, params, token, method = "GET") {
 }
 
 /**
- * Resolves paths that start with a tilde to the user's home directory.
+ * Resolves paths that start with a ~ to the user's home directory.
  *
  * @param  {string} filePath '~/GitHub/Repo/file.png'
  * @return {string}          '/home/bob/GitHub/Repo/file.png'
  */
-function resolveTilde(filePath) {
+function resolveTildeInPath(filePath) {
   if (!filePath || typeof(filePath) !== 'string') {
     return '';
   }
-
   // '~/folder/path' or '~' not '~alias/folder/path'
   if (filePath.startsWith('~/') || filePath === '~') {
     return filePath.replace('~', os.homedir());
   }
-
   return filePath;
 }
 
