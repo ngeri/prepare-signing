@@ -5,6 +5,7 @@ const axios = require('axios');
 const cproc = require('child_process');
 const path = require('path');
 const fs = require('fs')
+const os = require('os');
 
 function getToken(issuerID, minute, privateKey, keyId) {
   const payload = { 
@@ -91,12 +92,13 @@ async function run() {
           setupProvisioning(profileContent, pathToProvisioningProfile);
           setupKeychain(keychainName, keychainPassword, base64P12File, p12Password);
           
-          if (fs.existsSync(pathToProvisioningProfile)) {
-            console.log(`${pathToProvisioningProfile} exists`)
+          p = pathToProvisioningProfile.replace("~", os.homedir)
+          if (fs.existsSync(p)) {
+            console.log(`${p} exists`)
           }
           else
           {
-            console.log(`${pathToProvisioningProfile} does not exist`)
+            console.log(`${p} does not exist`)
           }
         } else {
           throw new Error(`Could not find matching provisioning profile for ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/`);
