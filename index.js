@@ -36,18 +36,33 @@ async function get(url, params, token, method = "GET") {
   return response.data;
 }
 
+/**
+ * Resolves paths that start with a tilde to the user's home directory.
+ *
+ * @param  {string} filePath '~/GitHub/Repo/file.png'
+ * @return {string}          '/home/bob/GitHub/Repo/file.png'
+ */
+function resolveTilde(filePath) {
+  if (!filePath || typeof(filePath) !== 'string') {
+    return '';
+  }
+
+  // '~/folder/path' or '~' not '~alias/folder/path'
+  if (filePath.startsWith('~/') || filePath === '~') {
+    return filePath.replace('~', os.homedir());
+  }
+
+  return filePath;
+}
+
 function provisioningProfilePath(profileUUID) {
 //  const profileName = `${profileUUID}.mobileprovision`;
   const profileName = "GoRide_AppStore.mobileprovision";
-  return `~/Library/MobileDevice/Provisioning Profiles/${profileName}`;
+  return resolveTilde(`~/Library/MobileDevice/Provisioning Profiles/${profileName}`);
 }
 
 function setupProvisioning(profileContentBase64, provisioningProfilePath) {
   const provisioningProfileDir = path.dirname(provisioningProfilePath)
-  shell.exec(`echo "provisioningProfileDir = ${provisioningProfileDir}"`);
-  shell.exec(`eval homedir=~`)
-  shell.exec("echo homedir = ${homedir}")
-  shell.exec("echo home = ${HOME}")
   shell.exec(`mkdir -p "${provisioningProfileDir}"`);
   shell.exec(`(echo ${profileContentBase64} | base64 --decode) > "${provisioningProfilePath}"`);
 }
