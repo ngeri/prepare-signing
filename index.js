@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const cproc = require('child_process');
 const path = require('path');
+const fs = require('fs')
 
 function getToken(issuerID, minute, privateKey, keyId) {
   const payload = { 
@@ -88,11 +89,15 @@ async function run() {
           
           const pathToProvisioningProfile = provisioningProfilePath(profileUUID)
           setupProvisioning(profileContent, pathToProvisioningProfile);
-          const command = cproc.spawn(`hexdump -C "${pathToProvisioningProfile}"`, {
-            shell: true
-          })
-          command.stdout.on('data', data => console.log(data.toString()))
           setupKeychain(keychainName, keychainPassword, base64P12File, p12Password);
+          
+          if (fs.existsSync(pathToProvisioningProfile)) {
+            console.log(`${pathToProvisioningProfile} exists`)
+          }
+          else
+          {
+            console.log(`${pathToProvisioningProfile} does not exist`)
+          }
         } else {
           throw new Error(`Could not find matching provisioning profile for ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/`);
         }
