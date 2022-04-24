@@ -56,8 +56,7 @@ function resolveTilde(filePath) {
 }
 
 function provisioningProfilePath(profileUUID) {
-//  const profileName = `${profileUUID}.mobileprovision`;
-  const profileName = "GoRide_AppStore.mobileprovision";
+  const profileName = `${profileUUID}.mobileprovision`;
   return resolveTilde(`~/Library/MobileDevice/Provisioning Profiles/${profileName}`);
 }
 
@@ -110,15 +109,6 @@ async function run() {
           const pathToProvisioningProfile = provisioningProfilePath(profileUUID)
           setupProvisioning(profileContent, pathToProvisioningProfile);
           setupKeychain(keychainName, keychainPassword, base64P12File, p12Password);
-          
-          p = pathToProvisioningProfile.replace("~", os.homedir)
-          if (fs.existsSync(p)) {
-            console.log(`${p} exists`)
-          }
-          else
-          {
-            console.log(`${p} does not exist`)
-          }
         } else {
           throw new Error(`Could not find matching provisioning profile for ${bundleIdentifier} on Developer Portal. Please check it on https://developer.apple.com/account/`);
         }
