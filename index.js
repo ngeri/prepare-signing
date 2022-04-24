@@ -40,7 +40,7 @@ async function get(url, params, token, method = "GET") {
  * @param  {string} filePath '~/GitHub/Repo/file.png'
  * @return {string}          '/home/bob/GitHub/Repo/file.png'
  */
-function resolveTildeInPath(filePath) {
+function resolveTilde(filePath) {
   if (!filePath || typeof(filePath) !== 'string') {
     return '';
   }
